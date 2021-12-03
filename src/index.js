@@ -2,15 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const elements = (
-  <div className="first-element">
-    <h1>
-      Test code 
-    </h1>
-    <h1>
-      Test code  2
-    </h1>
-  </div>
-);
 
-ReactDOM.render(elements, document.getElementById('application'));
+const element = React.createElement('h1', null, 'Hellow  world');
+
+ReactDOM.render(element, document.getElementById('application'));
