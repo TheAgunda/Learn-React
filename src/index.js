@@ -2,6 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-const first_element = <h1 className="first-element">This is first element</h1>;
+const elements = (
+  <div className="first-element">
+    <h1>
+      Test code 
+    </h1>
+    <h1>
+      Test code  2
+    </h1>
+  </div>
+);
 
-ReactDOM.render(first_element, document.getElementById('application'));
+ReactDOM.render(elements, document.getElementById('application'));
