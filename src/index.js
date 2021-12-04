@@ -2,13 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//parent element 
-//properties 
-//childElement
+//React function component..
+function DisplayEmployee(employee) {
 
-const element = React.createElement('div', { className: "first-element" },
-  React.createElement('h1', null, "hello world !"),
-  React.createElement("h3", { className: 'true' }, "hi, TheAgunda...")
-);
+  return <div>
+    <p>Name: <b>{employee.name}</b></p>
+    <p>Email: <b>{employee.email}</b></p>
+    <p>Location: <b>{employee.location}</b></p>
+    <p>Salary: <b>{employee.salary}</b></p>
+  </div>
+}
 
-ReactDOM.render(element, document.getElementById('application'));
+const element = <DisplayEmployee name="Kiran Badola" email="badolakiran96@gmail.com" location="India" salary="200K" ></DisplayEmployee>
+
+ReactDOM.render(element,document.getElementById('application'))
