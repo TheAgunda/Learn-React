@@ -2,32 +2,60 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
-//React arrow function
-//Always use capital letter for naming react component because react don't recognize component which start with small letter.
+//State in react..
 
-//function component
-var DisplayEmployee = (employee) => {
+class CountCharacter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      message: '',
+      counter:10
+    };
+  }
+  onMessageChange(text) {
+    console.log( )
+    this.setState({
+      message: "Number of character is text is " + text.length + "."
+    })
+  }
+  render() {
+    return <div>
 
-  return <div>
-    <p>Name: <b>{employee.name}</b></p>
-    <p>Email: <b>{employee.email}</b></p>
-    <p>Location: <b>{employee.location}</b></p>
-    <p>Salary: <b>{employee.salary}</b></p>
-    <DepartmentInfo department_name={employee.department_name} hod={employee.hod} >
-
-    </DepartmentInfo>
-  </div>
+      <h1>
+        Count CountCharacter
+      </h1>
+      <p>
+        Enter character
+      </p>
+      <input type="text" onChange={e => this.onMessageChange(e.target.value)} />
+      <label>{this.state.message}</label>
+      <label>{this.state.counter}</label>
+    </div>
+  }
 }
 
-//function component
-var DepartmentInfo = (department_info) => {
-  return <div>
-    <p>Name: <b>{department_info.department_name}</b></p>
-    <p>HOD: <b>{department_info.hod}</b></p>
-  </div>
+
+class Employee extends React.Component {
+
+  state = { counter: 0 };
+  add_employee = () => {
+    this.setState({ counter: this.state.counter + 1 })
+    // this.counter = this.counter + 1;
+    // alert("adding a new employee");
+    // alert("Button is clicked " + this.counter + ' times.')
+
+  }
+
+  render() {
+    return <div>
+      <h1>Welcome to Employee Component</h1>
+      <p>Button is clicked {this.state.counter} times.</p>
+      <button onClick={this.add_employee}>Add Employee</button>
+    </div>
+  }
 }
 
 
-const element = <DisplayEmployee name="Kiran Badola" email="badolakiran96@gmail.com" location="India" salary="200K" department_name="Computer Sc. and Engg." hod="Mr. TheAgunda" ></DisplayEmployee>
+const element = <CountCharacter></CountCharacter>
 
 ReactDOM.render(element, document.getElementById('application'))
