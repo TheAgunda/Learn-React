@@ -17,7 +17,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $projects = Employee::all();
-        return response([ 'projects' => EmployeeResource::collection($projects), 'message' => 'Retrieved successfully'], 200);
+        return response([ 'employees' => EmployeeResource::collection($projects), 'message' => 'Retrieved successfully'], 200);
    
     }
 
