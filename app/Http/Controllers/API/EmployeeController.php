@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\EmployeeResource;
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class EmployeeController extends Controller
 {
@@ -17,8 +18,7 @@ class EmployeeController extends Controller
     public function index()
     {
         $projects = Employee::all();
-        return response([ 'employees' => EmployeeResource::collection($projects), 'message' => 'Retrieved successfully'], 200);
-   
+        return response(['employees' => EmployeeResource::collection($projects), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -29,7 +29,20 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        $validator = Validator::make($data, [
+            'name' => 'required|max:255',
+            'location' => 'required|max:255',
+            'salary' => 'required|max:6'
+        ]);
+
+        if ($validator->fails()) {
+            return response(['error' => $validator->errors(), 'Validation Error']);
+        }
+
+        $employee = Employee::create($data);
+
+        return response(['project' => new EmployeeResource($employee), 'message' => 'Created successfully'], 201);
     }
 
     /**
