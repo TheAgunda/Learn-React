@@ -53,7 +53,7 @@ class EmployeeController extends Controller
      */
     public function show(Employee $employee)
     {
-        //
+        return response(['employee' => new EmployeeResource($employee), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
@@ -65,7 +65,9 @@ class EmployeeController extends Controller
      */
     public function update(Request $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+
+        return response(['employee' => new EmployeeResource($employee), 'message' => 'Update successfully'], 200);
     }
 
     /**
@@ -76,6 +78,7 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        //
+        $employee->delete();
+        return response(['message' => 'Deleted']);
     }
 }
