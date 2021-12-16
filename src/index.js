@@ -1,31 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { useFormik } from 'formik';
+import * as yup from 'yup';
 
-const ValidatedEmployee = (empData) => {
-  const errors = {
-
-  }
-  if (!empData.name) {
-    errors.name = "Please Enter the name";
-  }
-  else if (empData.name.length > 20) {
-    errors.name = "Employee name should not exceed 20 character";
-  }
-
-  if (!empData.location) {
-    errors.location = "Please Enter the location";
-
-  }
-  if (!empData.email) {
-    errors.email = "Please Enter employee  email.";
-  }
-  else if (! /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(empData.email)) {
-
-    errors.email = "Invalid Email";
-  }
-  return errors;
-}
 
 const EmployeeComponent = () => {
   const formik = useFormik({
@@ -35,7 +12,11 @@ const EmployeeComponent = () => {
       location: '',
       email: '',
     },
-    validate: ValidatedEmployee,
+    validationSchema: yup.object({
+      name:yup.string(20,"name should not exceed 20 character").required("this is requied value"),
+      location:yup.string().required("this is requied value"),
+      email:yup.string(20,"name should not exceed 20 character").email("invalid emai").required("this is requied value"),
+    }),
     onSubmit: values => {
       alert(JSON.stringify(values))
     }
@@ -53,7 +34,7 @@ const EmployeeComponent = () => {
               <form onSubmit={formik.handleSubmit}>
                 <div className="mb-3">
                   <label className="form-label" htmlFor='name'>Name</label>
-                  <input type="text" className="form-control" name="name" id="name" placeholder="name" value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} />
+                  <input  name="name" {...formik.getFieldProps('name')} />
 
 
 
@@ -61,17 +42,17 @@ const EmployeeComponent = () => {
                 </div>
                 <div className="mb-3">
                   <label className="form-label" htmlFor='email'>Email</label>
-                  <input type="text" className="form-control" name="email" id="email" placeholder="email" value={formik.values.email} onChange={formik.handleChange} onBlur={formik.handleBlur}></input>
+                  <input name="email" {...formik.getFieldProps('email')}/>
 
                   {formik.touched.email && formik.errors.email ? <div class="invalid-feedback d-flex">{formik.errors.email}</div> : null}
                 </div>
                 <div className="mb-3">
                   <label className="form-label" htmlFor='location'>Location</label>
-                  <input type="text" className="form-control" name="location" id="location" placeholder="location" value={formik.values.location} onChange={formik.handleChange} />
+                  <input  name="location" {...formik.getFieldProps('location')} />
                 </div>
                 <div className="mb-3">
-                  <label className="form-label" htmlFor=' q'>Salary</label>
-                  <input type="number" className="form-control" name="salary" id="salary" placeholder="salary" value={formik.values.salary} onChange={formik.handleChange} />
+                  <label className="form-label" htmlFor='salary'>Salary</label>
+                  <input name="salary" {...formik.getFieldProps('salary')} />
                 </div>
                 <button className='btn btn-info'>
                   Create
