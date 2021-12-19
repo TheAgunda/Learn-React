@@ -1,76 +1,108 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { ErrorMessage, Field, Form, Formik, useFormik } from 'formik';
-import * as yup from 'yup';
-
-const EmployeeComponent = () => {
+import React from "react";
+import reactDom from "react-dom";
 
 
-  //Validation Rules
-  return (
-    <Formik
-      initialValues={{
-        name: '',
-        salary: '',
-        location: '',
-        email: '',
-        designation: ''
-      }}
 
-      validationSchema={yup.object({
-        name: yup.string(20, "name should not exceed 20 character").required("this is requied value"),
-        location: yup.string().required("this is requied value"),
-        email: yup.string(20, "name should not exceed 20 character").email("invalid emai").required("this is requied value"),
-      })}
+//Lifting State Up in React
+class OrderComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      address: '',
+      quantity: '',
+      address: ''
+    }
+  }
+  orderInfoChange = (qty) => {
+    this.setState({ quantity: qty })
+  }
+  addressChange = (add) => {
+    this.setState({ address: add })
+  }
+  render() {
 
-
-      onSubmit={values => {
-        alert(JSON.stringify(values))
-      }}>
-
-      {
-        props => (
-          <div>
-            <h2>New Employee Form</h2>
-            <Form>
-              <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Name</label>
-                <Field name="name" type="text"></Field>
-                <ErrorMessage name='name'></ErrorMessage>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Salary</label>
-                <Field name="salary" type="text"></Field>
-                <ErrorMessage name='salary'></ErrorMessage>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Location</label>
-                <Field name="location" type="text"></Field>
-                <ErrorMessage name='location'></ErrorMessage>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Email</label>
-                <Field name="email" type="email"></Field>
-                <ErrorMessage name='email'></ErrorMessage>
-              </div>
-              <div className="mb-3">
-                <label htmlFor="exampleFormControlInput1" className="form-label">Designation</label>
-                <Field name="designation" as="select">
-                  <option values="software-engg">Software Engg.</option>
-                  <option values="programmer">Programmer</option>
-                  <option values="tester">Tester</option>
-                </Field>
-
-              </div>
-              <button type='submit' disabled={!props.isValid}>Create</button>
-            </Form>
-          </div>
-        )
-      }
-    </Formik >
-  )
+    return <div>
+      Order Component
+      <ProductInformationComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChange}></ProductInformationComponent>
+      <AddressComponent address={this.state.address} onAddressChange={this.addressChange}></AddressComponent>
+      <SummaryComponent address={this.state.address} quantity={this.state.quantity} onQuantityChange={this.orderInfoChange}></SummaryComponent>
+    </div>
+  }
 }
 
-const element = <EmployeeComponent></EmployeeComponent>;
+class ProductInformationComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  handleChange = (e) => {
+    this.props.onQuantityChange(e.target.value);
 
-ReactDOM.render(element, document.getElementById("application"));
+  }
+  render() {
+
+    return <div>
+      <p>
+        Product Component
+      </p>
+      <select>
+        <option value="food">Food</option>
+        <option value="drink">Drink</option>
+        <option value="fast food">Fast Food</option>
+        <option value="food">Food</option>
+      </select>
+      <p>
+        <label>Enter Quantity</label>
+      </p>
+      <input type="text" value={this.props.quantity} onChange={this.handleChange} />
+    </div>
+  }
+}
+class AddressComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  handleChange = (e) => {
+
+    this.props.onAddressChange(e.target.value)
+  }
+  render() {
+
+    return <div>
+      <p>
+        Address Component
+      </p>
+      <textarea value={this.props.address} onChange={this.handleChange}></textarea>
+
+    </div>
+  }
+}
+
+class SummaryComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  handleChange = (e) => {
+
+    this.props.onQuantityChange(e.target.value)
+  }
+  render() {
+
+    return <div>
+      <p>
+        Product Name : Food<br />
+      </p>
+      <p>
+        Product Qty : 1<br />
+      </p>
+      <input type="text" value={this.props.quantity} onChange={this.handleChange} />
+      <p>
+        Address: {this.props.address}
+
+      </p>
+      <button> Place Order</button>
+    </div>
+  }
+}
+
+const app = <OrderComponent></OrderComponent>
+reactDom.render(app, document.getElementById('application'))
