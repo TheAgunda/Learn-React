@@ -36,9 +36,16 @@ class CustomErrorBoundary extends React.PureComponent {
   }
   render() {
     if (this.state.hasError) {
-      return (<div className="alert alert-danger" role="alert">
-        We are having problem to load your preferrences now.
-      </div>);
+      return (
+        <React.Fragment>
+          <div className="alert alert-danger" role="alert">
+            We are having problem to load your preferrences now.
+          </div>
+          <div className="alert alert-danger" role="alert">
+            We are having problem to load your preferrences now.
+          </div>
+        </React.Fragment>
+      );
 
     }
     return this.props.children;
@@ -64,12 +71,12 @@ class OrderComponent extends React.Component {
   }
   render() {
 
-    return <div className="container">
+    return <>
       <h1 className="h6">Order Component</h1>
       <ProductInformationComponent quantity={this.state.quantity} onQuantityChange={this.orderInfoChange}></ProductInformationComponent>
       <AddressComponent address={this.state.address} onAddressChange={this.addressChange}></AddressComponent>
       <SummaryComponent address={this.state.address} quantity={this.state.quantity} onQuantityChange={this.orderInfoChange}></SummaryComponent>
-    </div>
+    </>
   }
 }
 
