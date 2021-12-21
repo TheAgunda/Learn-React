@@ -4,84 +4,86 @@ import reactDom from "react-dom";
 
 
 //Refs in React 
-class QuantityIncreament extends React.Component {
+//Refs Forwarding
+//Using ref in functional and class based component
+
+const DemoComponent = React.forwardRef((props, ref) => {
+  function testClick() {
+    ref.current.focus();
+  }
+  return (
+    <button onClick={testClick}>Click</button>
+  )
+});
+
+
+
+class Elevetor extends React.Component {
+
   constructor(props) {
     super(props);
-
-    this.quantityRef = React.createRef()
-
-  }
-  increatmentQuantity = () => {
-    this.quantityRef.current.value++;
+    this.elevetorRef = React.createRef();
   }
   render() {
-    alert("This is my first alert");
-    return (<div>
-      <p>
 
-        <label>
-          Enter Quantity:
-        </label>
-        <input type="text" ref={this.quantityRef} />
-        <button onClick={this.increatmentQuantity}>+</button>
+    return (<div>
+      <h4>Welcome to Elevetor Ordering screen.</h4>
+      <p>
+        <label>Elevetor  Name:</label>
+        <input type="text" ref={this.elevetorRef} />
+      </p>
+      <p>
+        <label>Elevetor  Speed:</label>
+        <input type="text" />
+      </p>
+      <p>
+        <label>Elevetor  Load:</label>
+        <input type="text" />
+      </p>
+      <Summary innerRef={this.elevetorRef}></Summary>
+      <DemoComponent ref={this.elevetorRef}></DemoComponent>
+    </div>)
+  }
+}
+class Summary extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  focusInput = () => {
+    this.props.innerRef.current.focus();
+  }
+  render() {
+    return (<div>
+      <h4>Order Summary</h4>
+      <p onClick={this.focusInput}>
+        <label>Elevetor  Name:</label>
+        <b>Product Name</b>
+      </p>
+      <p>
+        <label>Elevetor  Speed:</label>
+        <b> 10 m/s
+        </b>
+      </p>
+      <p>
+        <label>Elevetor  Load:</label>
+        <b> 550 Kg
+        </b>
       </p>
     </div>)
   }
 }
 
-class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.usernameRef = React.createRef();
-
+function testComponent() {
+  let testRef = null;
+  function handleClick() {
+    testRef.focus();
   }
-  componentDidMount() {
-    this.usernameRef.current.focus();
-  }
-  render() {
-    return (<div>
-      <label>
-        Username
-      </label>
-      <input type="text" ref={this.usernameRef} />
-      <label>
-        Password
-      </label>
-      <input type="password" />
-      <button>Login</button>
-    </div>)
-  }
+  return (<div>
+    <input type="text" ref={e => testRef = e} />
+    <input type="button" value="Focus the test input " onClick={handleClick} />
+  </div>)
 }
 
 
-class VideoPlayer extends React.Component {
-  constructor(props) {
-    super(props);
-    this.videoRef = React.createRef();
-  }
-  playVideo = () => {
-    this.videoRef.current.play();
-  }
-  pauseVideo = () => {
-    this.videoRef.current.pause();
-  }
-  render() {
-    return (<div>
-
-      Video Player
-      <video width="500" controls  ref={this.videoRef} >
-
-        <source src="http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4" type="video/mp4"></source>
-      </video>
-      <div>
-
-        <button onClick={this.playVideo}>Play</button>
-        <button onClick={this.pauseVideo}>Pause</button>
-      </div>
-    </div>)
-  }
-
-}
-
-const app = <VideoPlayer></VideoPlayer>
+const app = <Elevetor></Elevetor>
 reactDom.render(app, document.getElementById('application'))
