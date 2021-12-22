@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\API\DepartmentController;
 use App\Http\Controllers\API\EmployeeController;
+use App\Models\Department;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,4 +24,5 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::apiResource('employees', EmployeeController::class);
+Route::apiResource('departments', DepartmentController::class);
 // Route::apiResource('employees', EmployeeController::class)->middleware('auth:api');
