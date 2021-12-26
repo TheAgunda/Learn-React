@@ -1,109 +1,255 @@
 
-import React from "react";
+import React, { Component, Profiler } from "react";
 import ReactDOM from "react-dom";
 
 
 
-//Portals in React
-class Employee extends React.Component {
+//Profiler in React
+
+class HtmlColor extends React.Component {
+
   constructor(props) {
     super(props);
+  }
+  render() {
+    return (<div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Color</th>
+            <th scope="col">Hexa Color</th>
+            <th scope="col">Handle</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">1</th>
+            <td><input type="color" value="#df6c4f"></input></td>
+            <td>#df6c4f</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">2</th>
+            <td><input type="color" value="#49c5b6"></input></td>
+            <td>#49c5b6</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">3</th>
+            <td><input type="color" value="#3c948b"></input></td>
+            <td>#3c948b</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">4</th>
+            <td><input type="color" value="#1a99aa"></input></td>
+            <td>#1a99aa</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">5</th>
+            <td><input type="color" value="#ecd06f"></input></td>
+            <td>#ecd06f</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">6</th>
+            <td><input type="color" value="#2779a7"></input></td>
+            <td>#2779a7</td>
+            <td>awwwards.com</td>
+          </tr>
+
+          <tr>
+            <th scope="row">7</th>
+            <td><input type="color" value="#d14836"></input></td>
+            <td>#d14836</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">8</th>
+            <td><input type="color" value="#e6eaea"></input></td>
+            <td>#e6eaea</td>
+            <td> awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">9</th>
+            <td><input type="color" value="#8154ef"></input></td>
+            <td>#8154ef</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">10</th>
+            <td><input type="color" value="#ff4e4e"></input></td>
+            <td>#ff4e4e</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">11</th>
+            <td><input type="color" value="#9fd2d6"></input></td>
+            <td>#9fd2d6</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">12</th>
+            <td><input type="color" value="#f05f70"></input></td>
+            <td>#f05f70</td>
+            <td>awwwards.com</td>
+          </tr>
+          <tr>
+            <th scope="row">13</th>
+            <td><input type="color" value="#00fca3"></input></td>
+            <td>#00fca3</td>
+            <td>awwwards.com</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>)
+  }
+}
+
+class NewAccountReports extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+
     this.state = {
-      employees: []
+
+      FromDate: '',
+
+      ToDate: ''
+
     };
-  }
-  componentDidMount() {
-    fetch("http://localhost:8000/api/employees")
-      .then(res => res.json())
-      .then(
-        (result) => {
-          this.setState({
-            employees: result.data
-          });
-        }
-      );
-  }
-  editEmployee = () => {
-    this.setState({ showModal: !this.state.showModal });
-  }
-  render() {
-    return (
-      <div className="container">
-        <h2>Employees Data...</h2>
-        <table className="table table-striped">
-          <thead>
-            <tr>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Location</th>
-              <th>Salary</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {this.state.employees.map(emp => (
-              <tr key={emp.id}>
-                <td>{emp.id}</td>
-                <td>{emp.name}</td>
-                <td>{emp.location}</td>
-                <td>{emp.salary}</td>
-                <td>
-                  <button onClick={this.editEmployee} className="btn btn-sm btn-danger">Edit</button>
-                  <Modal open={this.state.showModal} close={this.editEmployee}>
-                    <EmployeeModal employee={emp} name={emp.name}></EmployeeModal>
-                  </Modal>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  }
-}
-class Modal extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render() {
-    return (
-      this.props.open ? ReactDOM.createPortal(
-        <div className="container">
-          <div className="card mt-3">
-            <div className="card-body">
-              <button onClick={this.props.close} type="button" className="btn-close" aria-label="Close"></button>
-              {this.props.children}
-            </div></div></div>, document.body) : null
-    );
-  }
-}
 
-class EmployeeModal extends React.Component {
-  constructor(props) {
-    super(props);
   }
+
+
+
+  handleChange = e => {
+
+    let name = e.target.name;
+
+    let value = e.target.value;
+
+    this.setState({
+
+      [name]: value
+
+    });
+
+  }
+
   render() {
+
     return (
+
       <div>
-        <h5 class="card-title">{this.props.name} Details...</h5>
+
+        <h2>Welcome to New Accounts Reports Component...</h2>
+
         <p>
-          <label>Employee ID : <input type="text" className="form-control form-control-sm" value={this.props.employee.id}></input></label>
+
+          <label>From Date : <input type="text" name="FromDate"
+
+            onChange={this.handleChange} value={this.state.FromDate}></input></label>
+
         </p>
+
         <p>
-          <label>Employee Name : <input type="text" className="form-control form-control-sm" value={this.props.employee.name}></input></label>
+
+          <label>To Date : <input type="text" name="ToDate"
+
+            onChange={this.handleChange} value={this.state.ToDate}></input></label>
+
         </p>
-        <p>
-          <label>Employee Location : <input type="text" className="form-control form-control-sm" value={this.props.employee.location}></input></label>
-        </p>
-        <p>
-          <label>Employee Salary : <input type="text" className="form-control form-control-sm" value={this.props.employee.salary}></input></label>
-        </p>
-        <input type="submit" value="Save" className="btn btn-sm btn-primary"></input>
+
+        <input type="submit" value="Generate"></input>
+
       </div>
+
     )
+
   }
+
 }
 
 
-const app = <Employee></Employee>
-ReactDOM.render(app, document.getElementById('application'))
+
+class LoansRepaymentReports extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+
+  }
+
+
+
+  render() {
+
+    return (
+
+      <div>
+
+        <h2>Welcome to Loans Repayment Reports Component...</h2>
+
+      </div>
+
+    );
+
+  }
+
+}
+
+
+
+class ReportsDashboard extends React.Component {
+
+  constructor(props) {
+
+    super(props);
+
+  }
+
+
+
+
+  callbackFunction = (id, phase, actualDuration, baseDuration, startTime,
+
+    commitTime, interaction) => {
+
+    console.log('Id is : ' + id + ', Phase is : ' + phase);
+
+    console.log('Actual Duration is : ' + actualDuration + ' and Base Duration is :' +
+
+      baseDuration);
+
+  }
+  render() {
+
+    return (
+
+      <React.Fragment>
+
+        <h2>Welcome to Reports Dashboard...</h2>
+
+        <Profiler id="newAccounts" onRender={this.callbackFunction}>
+
+          <NewAccountReports></NewAccountReports>
+
+        </Profiler>
+        <Profiler id="loanReplaymentReports" onRender={this.callbackFunction}>
+          <LoansRepaymentReports></LoansRepaymentReports>
+        </Profiler>
+      </React.Fragment>
+
+    );
+
+  }
+
+}
+
+const element = <ReportsDashboard></ReportsDashboard>
+ReactDOM.render(element, document.getElementById('application'))
