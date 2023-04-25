@@ -18,7 +18,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $projects = Department::all();
-        return response(['departments' => DepartmentResources::collection($projects), 'message' => 'Retrieved successfully'], 200);
+        return response(['data' => DepartmentResources::collection($projects), 'message' => 'Retrieved successfully'], 200);
     }
 
     /**
